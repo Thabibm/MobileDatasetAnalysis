@@ -9,15 +9,15 @@
 import Foundation
 import UIKit
 
-struct ResultList: Codable {
-    var dataset: Dataset
+public struct ResultList: Codable {
+    var resultList: Dataset
     
     enum CodingKeys: String, CodingKey {
-        case dataset = "result"
+        case resultList = "result"
     }
 }
 
-struct Dataset: Codable {
+public struct Dataset: Codable {
     var mobileDataList: [MobileData]
     
     enum CodingKeys: String, CodingKey {
@@ -28,7 +28,7 @@ struct Dataset: Codable {
 struct MobileData: Codable {
     var id: Int8
     var quarter: String
-    var volumeData: Double
+    var volumeData: String
     
     enum CodingKeys: String, CodingKey {
         case volumeData = "volume_of_mobile_data", id = "_id", quarter = "quarter"
