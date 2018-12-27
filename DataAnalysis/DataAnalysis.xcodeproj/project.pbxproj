@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		F13D787421D4BE1C00826B5B /* MobileDataViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F13D787321D4BE1C00826B5B /* MobileDataViewModel.swift */; };
 		F1A673B021D3A47700C460F5 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1A673AF21D3A47700C460F5 /* AppDelegate.swift */; };
 		F1A673B221D3A47700C460F5 /* DataDisplayController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1A673B121D3A47700C460F5 /* DataDisplayController.swift */; };
 		F1A673B521D3A47700C460F5 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F1A673B321D3A47700C460F5 /* Main.storyboard */; };
@@ -42,6 +43,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		F13D787321D4BE1C00826B5B /* MobileDataViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MobileDataViewModel.swift; sourceTree = "<group>"; };
 		F1A673AC21D3A47700C460F5 /* DataAnalysis.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DataAnalysis.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F1A673AF21D3A47700C460F5 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		F1A673B121D3A47700C460F5 /* DataDisplayController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataDisplayController.swift; sourceTree = "<group>"; };
@@ -88,6 +90,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		F13D787221D4BDE400826B5B /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				F13D787321D4BE1C00826B5B /* MobileDataViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
 		F1A673A321D3A47700C460F5 = {
 			isa = PBXGroup;
 			children = (
@@ -115,6 +125,7 @@
 				F1A673DD21D3A4D900C460F5 /* AppDelegate */,
 				F1A673F021D3F86A00C460F5 /* Network */,
 				F1A673EB21D3DB3200C460F5 /* Model */,
+				F13D787221D4BDE400826B5B /* ViewModel */,
 				F1A673DE21D3A4E700C460F5 /* ViewController */,
 				F1A673DF21D3A50000C460F5 /* Storyboard */,
 				F1A673E021D3A50F00C460F5 /* Resources */,
@@ -356,6 +367,7 @@
 			files = (
 				F1A673B221D3A47700C460F5 /* DataDisplayController.swift in Sources */,
 				F1A673F221D3F8DC00C460F5 /* DataConsumptionService.swift in Sources */,
+				F13D787421D4BE1C00826B5B /* MobileDataViewModel.swift in Sources */,
 				F1A673B021D3A47700C460F5 /* AppDelegate.swift in Sources */,
 				F1A673ED21D3DB7800C460F5 /* MobileData.swift in Sources */,
 			);
