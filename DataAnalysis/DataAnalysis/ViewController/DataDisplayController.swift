@@ -12,6 +12,9 @@ private let CELL_HEIGHT: CGFloat = 75
 private let HEADER_HEIGHT: CGFloat = 50
 private let HEADER_ROW = 0
 
+private let THEME_COLOR = UIColor.init(red: 215.0/255.0, green: 63/255.0, blue: 68/255.0, alpha: 1.0)
+private let BORDER_COLOR = UIColor.init(white: 223.0/255.0, alpha: 1.0)
+
 class DataCell: UITableViewCell {
   
     @IBOutlet var placeholderView: UIView?
@@ -24,7 +27,7 @@ class DataCell: UITableViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        placeholderView?.layer.borderColor = UIColor.init(white: 223.0/255.0, alpha: 1.0).cgColor
+        placeholderView?.layer.borderColor = BORDER_COLOR.cgColor
     }
 }
 
@@ -36,6 +39,11 @@ class DataDisplayController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
+        
+        navigationController?.navigationBar.barTintColor = THEME_COLOR
+        let textAttributes = [NSAttributedString.Key.foregroundColor:UIColor.white]
+        navigationController?.navigationBar.titleTextAttributes = textAttributes
+        
         mobileDataViewModel.loadMobileConsumptionData()
         mobileDataViewModel.updateHandler = { [unowned self] in
             self.mobileDataTableView.reloadData()
@@ -73,6 +81,10 @@ extension DataDisplayController : UITableViewDataSource {
             dataCell = tableView.dequeueReusableCell(withIdentifier: "HeaderCell", for: indexPath) as? DataCell
             dataCell!.yearLabel.text = "YEAR"
             dataCell!.volumeConsumptionLabel.text = "Total volume consumed in petabytes"
+            
+            dataCell!.yearLabel.textColor = THEME_COLOR
+            dataCell?.volumeConsumptionLabel.textColor = THEME_COLOR
+            
             return dataCell!
         }
         
