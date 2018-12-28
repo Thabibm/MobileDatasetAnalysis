@@ -11,6 +11,13 @@
 		F13D787721D4C0C200826B5B /* WarningManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F13D787621D4C0C200826B5B /* WarningManager.swift */; };
 		F13D787821D4C0C200826B5B /* WarningManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F13D787621D4C0C200826B5B /* WarningManager.swift */; };
 		F13D787921D4C0C200826B5B /* WarningManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F13D787621D4C0C200826B5B /* WarningManager.swift */; };
+		F13D787C21D4D50B00826B5B /* MobileDataObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = F13D787B21D4D50B00826B5B /* MobileDataObject.swift */; };
+		F13D787D21D4D50B00826B5B /* MobileDataObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = F13D787B21D4D50B00826B5B /* MobileDataObject.swift */; };
+		F13D787E21D4D50B00826B5B /* MobileDataObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = F13D787B21D4D50B00826B5B /* MobileDataObject.swift */; };
+		F13D787F21D4D61400826B5B /* Realm.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F1A673E221D3C92700C460F5 /* Realm.framework */; };
+		F13D788021D4D61400826B5B /* Realm.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = F1A673E221D3C92700C460F5 /* Realm.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		F13D788121D4D61400826B5B /* RealmSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F1A673E321D3C92700C460F5 /* RealmSwift.framework */; };
+		F13D788221D4D61400826B5B /* RealmSwift.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = F1A673E321D3C92700C460F5 /* RealmSwift.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		F1A673B021D3A47700C460F5 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1A673AF21D3A47700C460F5 /* AppDelegate.swift */; };
 		F1A673B221D3A47700C460F5 /* DataDisplayController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1A673B121D3A47700C460F5 /* DataDisplayController.swift */; };
 		F1A673B521D3A47700C460F5 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F1A673B321D3A47700C460F5 /* Main.storyboard */; };
@@ -18,8 +25,6 @@
 		F1A673BA21D3A47800C460F5 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F1A673B821D3A47800C460F5 /* LaunchScreen.storyboard */; };
 		F1A673C521D3A47800C460F5 /* DataAnalysisTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1A673C421D3A47800C460F5 /* DataAnalysisTests.swift */; };
 		F1A673D021D3A47800C460F5 /* DataAnalysisUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1A673CF21D3A47800C460F5 /* DataAnalysisUITests.swift */; };
-		F1A673E421D3C92700C460F5 /* Realm.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F1A673E221D3C92700C460F5 /* Realm.framework */; };
-		F1A673E521D3C92700C460F5 /* RealmSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F1A673E321D3C92700C460F5 /* RealmSwift.framework */; };
 		F1A673ED21D3DB7800C460F5 /* MobileData.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1A673EC21D3DB7800C460F5 /* MobileData.swift */; };
 		F1A673EE21D3DB7800C460F5 /* MobileData.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1A673EC21D3DB7800C460F5 /* MobileData.swift */; };
 		F1A673EF21D3DB7800C460F5 /* MobileData.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1A673EC21D3DB7800C460F5 /* MobileData.swift */; };
@@ -45,9 +50,25 @@
 		};
 /* End PBXContainerItemProxy section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		F13D788321D4D61400826B5B /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				F13D788221D4D61400826B5B /* RealmSwift.framework in Embed Frameworks */,
+				F13D788021D4D61400826B5B /* Realm.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
 		F13D787321D4BE1C00826B5B /* MobileDataViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MobileDataViewModel.swift; sourceTree = "<group>"; };
 		F13D787621D4C0C200826B5B /* WarningManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WarningManager.swift; sourceTree = "<group>"; };
+		F13D787B21D4D50B00826B5B /* MobileDataObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MobileDataObject.swift; sourceTree = "<group>"; };
 		F1A673AC21D3A47700C460F5 /* DataAnalysis.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DataAnalysis.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F1A673AF21D3A47700C460F5 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		F1A673B121D3A47700C460F5 /* DataDisplayController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataDisplayController.swift; sourceTree = "<group>"; };
@@ -72,8 +93,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F1A673E421D3C92700C460F5 /* Realm.framework in Frameworks */,
-				F1A673E521D3C92700C460F5 /* RealmSwift.framework in Frameworks */,
+				F13D787F21D4D61400826B5B /* Realm.framework in Frameworks */,
+				F13D788121D4D61400826B5B /* RealmSwift.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -110,6 +131,14 @@
 			path = Utility;
 			sourceTree = "<group>";
 		};
+		F13D787A21D4D4BE00826B5B /* RealmModelObject */ = {
+			isa = PBXGroup;
+			children = (
+				F13D787B21D4D50B00826B5B /* MobileDataObject.swift */,
+			);
+			path = RealmModelObject;
+			sourceTree = "<group>";
+		};
 		F1A673A321D3A47700C460F5 = {
 			isa = PBXGroup;
 			children = (
@@ -138,6 +167,7 @@
 				F1A673DD21D3A4D900C460F5 /* AppDelegate */,
 				F1A673F021D3F86A00C460F5 /* Network */,
 				F1A673EB21D3DB3200C460F5 /* Model */,
+				F13D787A21D4D4BE00826B5B /* RealmModelObject */,
 				F13D787221D4BDE400826B5B /* ViewModel */,
 				F1A673DE21D3A4E700C460F5 /* ViewController */,
 				F1A673DF21D3A50000C460F5 /* Storyboard */,
@@ -235,6 +265,7 @@
 				F1A673A921D3A47700C460F5 /* Frameworks */,
 				F1A673AA21D3A47700C460F5 /* Resources */,
 				F1A673E621D3C95300C460F5 /* ShellScript */,
+				F13D788321D4D61400826B5B /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -383,6 +414,7 @@
 				F13D787421D4BE1C00826B5B /* MobileDataViewModel.swift in Sources */,
 				F1A673B021D3A47700C460F5 /* AppDelegate.swift in Sources */,
 				F13D787721D4C0C200826B5B /* WarningManager.swift in Sources */,
+				F13D787C21D4D50B00826B5B /* MobileDataObject.swift in Sources */,
 				F1A673ED21D3DB7800C460F5 /* MobileData.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -392,6 +424,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				F13D787821D4C0C200826B5B /* WarningManager.swift in Sources */,
+				F13D787D21D4D50B00826B5B /* MobileDataObject.swift in Sources */,
 				F1A673C521D3A47800C460F5 /* DataAnalysisTests.swift in Sources */,
 				F1A673EE21D3DB7800C460F5 /* MobileData.swift in Sources */,
 				F1A673F321D3F8DC00C460F5 /* DataConsumptionService.swift in Sources */,
@@ -403,6 +436,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				F13D787921D4C0C200826B5B /* WarningManager.swift in Sources */,
+				F13D787E21D4D50B00826B5B /* MobileDataObject.swift in Sources */,
 				F1A673D021D3A47800C460F5 /* DataAnalysisUITests.swift in Sources */,
 				F1A673EF21D3DB7800C460F5 /* MobileData.swift in Sources */,
 				F1A673F421D3F8DC00C460F5 /* DataConsumptionService.swift in Sources */,
