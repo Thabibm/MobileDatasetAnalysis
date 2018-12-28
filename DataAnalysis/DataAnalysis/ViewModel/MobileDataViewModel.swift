@@ -32,6 +32,25 @@ class MobileDataViewModel {
     }
 }
 
+//MARK: Data Presentation Methods
+
+extension MobileDataViewModel {
+    
+    func numberOfRowsToBeDisplayed() -> Int {
+        return dataset?.count ?? 0
+    }
+    
+    func dataAtIndexPath(_ indexPath: IndexPath) -> MobileDataObject {
+        return dataset![indexPath.row]
+    }
+    
+    func getVolumeDisplayString(_ totalVolume: Double) -> String {
+        return String(format: "%.2f", totalVolume)
+    }
+}
+
+
+//MARK: Data Cache Methods
 
 extension MobileDataViewModel {
     
@@ -110,7 +129,7 @@ extension MobileDataViewModel {
             dataObject!.quarterlyDataObjects.append(quaterlyData)
         }
         
-        if lastYear <= YEAR_UPPER_LIMIT {
+        if lastYear <= YEAR_UPPER_LIMIT && dataObject != nil {
             dataList.append(dataObject!)
             cacheMobileDataObject(dataObject!)
         }
