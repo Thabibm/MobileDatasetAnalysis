@@ -41,6 +41,8 @@ class DataDisplayController: UIViewController {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         
+        self.title = "Data Analytics"
+        
         navigationController?.navigationBar.barTintColor = THEME_COLOR
         let textAttributes = [NSAttributedString.Key.foregroundColor:UIColor.white]
         navigationController?.navigationBar.titleTextAttributes = textAttributes
@@ -56,7 +58,6 @@ class DataDisplayController: UIViewController {
         
         mobileDataViewModel.loadMobileConsumptionData()
         mobileDataViewModel.updateHandler = { [unowned self] in
-            self.mobileDataTableView.reloadData()
             DispatchQueue.main.async {
                 self.refreshControl.endRefreshing()
                 self.mobileDataTableView.alpha = 0
@@ -68,19 +69,8 @@ class DataDisplayController: UIViewController {
         }
     }
     
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        self.title = "Data Analytics"
-    
     @objc private func refreshData(_ sender: Any) {
         mobileDataViewModel.fetchMobileDataConsumption()
-    }
-    
-        
-        self.navigationController?.navigationBar.alpha = 0
-        UIView.animate(withDuration: 1.5) {
-            self.navigationController?.navigationBar.alpha = 1
-        }
     }
 }
 
