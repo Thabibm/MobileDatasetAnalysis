@@ -33,6 +33,7 @@
 		F1C1246221D7708C00E49F7D /* RealmSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F1A673E321D3C92700C460F5 /* RealmSwift.framework */; };
 		F1C1246421D7765500E49F7D /* MobileDataTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1C1246321D7765500E49F7D /* MobileDataTest.swift */; };
 		F1C1247621D79E1A00E49F7D /* DataConsumptionServiceTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1C1247521D79E1A00E49F7D /* DataConsumptionServiceTest.swift */; };
+		F1C1247821D7A75700E49F7D /* MobileDataViewModelTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1C1247721D7A75700E49F7D /* MobileDataViewModelTest.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -90,6 +91,7 @@
 		F1A673F121D3F8DC00C460F5 /* DataConsumptionService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataConsumptionService.swift; sourceTree = "<group>"; };
 		F1C1246321D7765500E49F7D /* MobileDataTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MobileDataTest.swift; sourceTree = "<group>"; };
 		F1C1247521D79E1A00E49F7D /* DataConsumptionServiceTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataConsumptionServiceTest.swift; sourceTree = "<group>"; };
+		F1C1247721D7A75700E49F7D /* MobileDataViewModelTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MobileDataViewModelTest.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -190,6 +192,7 @@
 				F1A673C421D3A47800C460F5 /* DataAnalysisTests.swift */,
 				F1C1246321D7765500E49F7D /* MobileDataTest.swift */,
 				F1C1247521D79E1A00E49F7D /* DataConsumptionServiceTest.swift */,
+				F1C1247721D7A75700E49F7D /* MobileDataViewModelTest.swift */,
 				F1A673C621D3A47800C460F5 /* Info.plist */,
 			);
 			path = DataAnalysisTests;
@@ -435,6 +438,7 @@
 			files = (
 				F1A673C521D3A47800C460F5 /* DataAnalysisTests.swift in Sources */,
 				F1C1247621D79E1A00E49F7D /* DataConsumptionServiceTest.swift in Sources */,
+				F1C1247821D7A75700E49F7D /* MobileDataViewModelTest.swift in Sources */,
 				F1C1246421D7765500E49F7D /* MobileDataTest.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
