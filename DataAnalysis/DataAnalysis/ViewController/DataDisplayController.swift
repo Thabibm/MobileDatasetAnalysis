@@ -21,7 +21,6 @@ class DataCell: UITableViewCell {
     @IBOutlet weak var yearLabel: UILabel!
     @IBOutlet weak var volumeConsumptionLabel: UILabel!
     @IBOutlet weak var infoIconButton: UIButton!
-    @IBOutlet weak var infoIconTapHandler: UIButton!
     
     // MARK: Init Methods
     
@@ -31,15 +30,21 @@ class DataCell: UITableViewCell {
     }
 }
 
+
 class DataDisplayController: UIViewController {
 
     @IBOutlet weak var mobileDataTableView: UITableView!
-    var mobileDataViewModel: MobileDataViewModel = MobileDataViewModel()
+    private var mobileDataViewModel: MobileDataViewModel = MobileDataViewModel()
     private let refreshControl = UIRefreshControl()
+    
+    //MARK - Detail View Properties
+    @IBOutlet weak var detailBgView: UIView!
+    @IBOutlet weak var detailView: UIView!
+    @IBOutlet weak var yearLabel: UILabel!
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
         
         self.title = "Data Analytics"
         
@@ -56,6 +61,9 @@ class DataDisplayController: UIViewController {
         refreshControl.addTarget(self, action: #selector(refreshData(_:)), for: .valueChanged)
         refreshControl.tintColor = THEME_COLOR
         
+        let tap = UITapGestureRecognizer(target: self, action:  #selector(self.handleTap(_:)))
+        detailBgView.addGestureRecognizer(tap)
+        
         mobileDataViewModel.loadMobileConsumptionData()
         mobileDataViewModel.updateHandler = { [unowned self] in
             DispatchQueue.main.async {
@@ -67,10 +75,55 @@ class DataDisplayController: UIViewController {
                 }
             }
         }
+        
+        detailBgView.isHidden = true
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        view.layoutIfNeeded()
     }
     
     @objc private func refreshData(_ sender: Any) {
         mobileDataViewModel.fetchMobileDataConsumption()
+    }
+    
+    @objc func handleTap(_ sender: UITapGestureRecognizer) {
+        UIView.animate(withDuration: 0.5, animations: {
+            self.detailBgView.alpha = 0
+            self.detailView.alpha = 0
+            self.detailBgView.frame = CGRect.init(x: 0, y: self.view.frame.size.height, width: self.view.frame.size.width, height: self.view.frame.size.height)
+        }) { (complete) in
+            self.detailBgView.backgroundColor = UIColor.clear
+            self.detailBgView.isHidden = true
+            self.detailBgView.alpha = 1
+        }
+    }
+    
+    func showDetailView(_ data: MobileDataObject) {
+        
+        yearLabel.text = data.year
+        let quaterlyDataList = mobileDataViewModel.getQuaterlyDisplayData(data)
+        
+        var index = 1
+        for item in quaterlyDataList {
+            let label = detailView.viewWithTag(index) as! UILabel
+            label.text = item
+            index = index + 1
+        }
+        
+        detailBgView.backgroundColor = UIColor.clear
+        detailView.alpha = 0
+        detailBgView.isHidden = false
+        detailBgView.frame = CGRect.init(x: 0, y: view.frame.size.height, width: view.frame.size.width, height: view.frame.size.height)
+        
+        UIView.animate(withDuration: 0.5, animations: {
+            self.detailBgView.frame = CGRect.init(x: 0, y: 0, width: self.view.frame.size.width, height: self.view.frame.size.height)
+            self.detailBgView.backgroundColor = UIColor.black.withAlphaComponent(0.25)
+            self.detailView.alpha = 1
+        }) { (completion) in
+            
+        }
     }
 }
 
@@ -110,9 +163,6 @@ extension DataDisplayController : UITableViewDataSource {
         
         let flag = !mobileData.isVolumeDecreasedYear
         dataCell!.infoIconButton.isHidden = flag
-        dataCell!.infoIconTapHandler.isHidden = flag
-        dataCell!.selectionStyle = .none
-        
         return dataCell!
     }
 }
@@ -139,6 +189,16 @@ extension DataDisplayController: UITableViewDelegate {
                 cell.layer.transform = CATransform3DIdentity
             }
         }
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
+        if indexPath.row == HEADER_ROW {
+            return
+        }
+        
+        let index = IndexPath.init(row: indexPath.row - 1, section: 0)
+        showDetailView(mobileDataViewModel.dataAtIndexPath(index))
     }
 }
 
