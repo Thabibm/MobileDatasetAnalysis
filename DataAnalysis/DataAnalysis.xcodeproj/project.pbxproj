@@ -9,10 +9,8 @@
 /* Begin PBXBuildFile section */
 		F13D787421D4BE1C00826B5B /* MobileDataViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F13D787321D4BE1C00826B5B /* MobileDataViewModel.swift */; };
 		F13D787721D4C0C200826B5B /* WarningManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F13D787621D4C0C200826B5B /* WarningManager.swift */; };
-		F13D787821D4C0C200826B5B /* WarningManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F13D787621D4C0C200826B5B /* WarningManager.swift */; };
 		F13D787921D4C0C200826B5B /* WarningManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F13D787621D4C0C200826B5B /* WarningManager.swift */; };
 		F13D787C21D4D50B00826B5B /* MobileDataObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = F13D787B21D4D50B00826B5B /* MobileDataObject.swift */; };
-		F13D787D21D4D50B00826B5B /* MobileDataObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = F13D787B21D4D50B00826B5B /* MobileDataObject.swift */; };
 		F13D787E21D4D50B00826B5B /* MobileDataObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = F13D787B21D4D50B00826B5B /* MobileDataObject.swift */; };
 		F13D787F21D4D61400826B5B /* Realm.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F1A673E221D3C92700C460F5 /* Realm.framework */; };
 		F13D788021D4D61400826B5B /* Realm.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = F1A673E221D3C92700C460F5 /* Realm.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -26,11 +24,14 @@
 		F1A673C521D3A47800C460F5 /* DataAnalysisTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1A673C421D3A47800C460F5 /* DataAnalysisTests.swift */; };
 		F1A673D021D3A47800C460F5 /* DataAnalysisUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1A673CF21D3A47800C460F5 /* DataAnalysisUITests.swift */; };
 		F1A673ED21D3DB7800C460F5 /* MobileData.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1A673EC21D3DB7800C460F5 /* MobileData.swift */; };
-		F1A673EE21D3DB7800C460F5 /* MobileData.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1A673EC21D3DB7800C460F5 /* MobileData.swift */; };
 		F1A673EF21D3DB7800C460F5 /* MobileData.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1A673EC21D3DB7800C460F5 /* MobileData.swift */; };
 		F1A673F221D3F8DC00C460F5 /* DataConsumptionService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1A673F121D3F8DC00C460F5 /* DataConsumptionService.swift */; };
-		F1A673F321D3F8DC00C460F5 /* DataConsumptionService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1A673F121D3F8DC00C460F5 /* DataConsumptionService.swift */; };
 		F1A673F421D3F8DC00C460F5 /* DataConsumptionService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1A673F121D3F8DC00C460F5 /* DataConsumptionService.swift */; };
+		F1C1245F21D7708100E49F7D /* Realm.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F1A673E221D3C92700C460F5 /* Realm.framework */; };
+		F1C1246021D7708100E49F7D /* RealmSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F1A673E321D3C92700C460F5 /* RealmSwift.framework */; };
+		F1C1246121D7708900E49F7D /* Realm.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F1A673E221D3C92700C460F5 /* Realm.framework */; };
+		F1C1246221D7708C00E49F7D /* RealmSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F1A673E321D3C92700C460F5 /* RealmSwift.framework */; };
+		F1C1246421D7765500E49F7D /* MobileDataTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1C1246321D7765500E49F7D /* MobileDataTest.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -86,6 +87,7 @@
 		F1A673E321D3C92700C460F5 /* RealmSwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RealmSwift.framework; path = Carthage/Build/iOS/RealmSwift.framework; sourceTree = "<group>"; };
 		F1A673EC21D3DB7800C460F5 /* MobileData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MobileData.swift; sourceTree = "<group>"; };
 		F1A673F121D3F8DC00C460F5 /* DataConsumptionService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataConsumptionService.swift; sourceTree = "<group>"; };
+		F1C1246321D7765500E49F7D /* MobileDataTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MobileDataTest.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -102,6 +104,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F1C1246121D7708900E49F7D /* Realm.framework in Frameworks */,
+				F1C1246221D7708C00E49F7D /* RealmSwift.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -109,6 +113,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F1C1245F21D7708100E49F7D /* Realm.framework in Frameworks */,
+				F1C1246021D7708100E49F7D /* RealmSwift.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -180,6 +186,7 @@
 			isa = PBXGroup;
 			children = (
 				F1A673C421D3A47800C460F5 /* DataAnalysisTests.swift */,
+				F1C1246321D7765500E49F7D /* MobileDataTest.swift */,
 				F1A673C621D3A47800C460F5 /* Info.plist */,
 			);
 			path = DataAnalysisTests;
@@ -423,11 +430,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F13D787821D4C0C200826B5B /* WarningManager.swift in Sources */,
-				F13D787D21D4D50B00826B5B /* MobileDataObject.swift in Sources */,
 				F1A673C521D3A47800C460F5 /* DataAnalysisTests.swift in Sources */,
-				F1A673EE21D3DB7800C460F5 /* MobileData.swift in Sources */,
-				F1A673F321D3F8DC00C460F5 /* DataConsumptionService.swift in Sources */,
+				F1C1246421D7765500E49F7D /* MobileDataTest.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -646,6 +650,11 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 3VW82KHLXJ;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+				);
 				INFOPLIST_FILE = DataAnalysisTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -666,6 +675,11 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 3VW82KHLXJ;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+				);
 				INFOPLIST_FILE = DataAnalysisTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -685,6 +699,11 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 3VW82KHLXJ;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+				);
 				INFOPLIST_FILE = DataAnalysisUITests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -704,6 +723,11 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 3VW82KHLXJ;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+				);
 				INFOPLIST_FILE = DataAnalysisUITests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",

@@ -20,6 +20,20 @@
                ReferencedContainer = "container:DataAnalysis.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
+         <BuildActionEntry
+            buildForTesting = "YES"
+            buildForRunning = "YES"
+            buildForProfiling = "NO"
+            buildForArchiving = "NO"
+            buildForAnalyzing = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "F1A673BF21D3A47800C460F5"
+               BuildableName = "DataAnalysisTests.xctest"
+               BlueprintName = "DataAnalysisTests"
+               ReferencedContainer = "container:DataAnalysis.xcodeproj">
+            </BuildableReference>
+         </BuildActionEntry>
       </BuildActionEntries>
    </BuildAction>
    <TestAction

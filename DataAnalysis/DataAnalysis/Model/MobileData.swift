@@ -36,14 +36,15 @@ struct MobileData: Codable {
     
 }
 
+
 extension MobileData: Persistable {
-    
+
     public init(managedObject: QuaterlyDataObject) {
         id = managedObject.id
         quarter = managedObject.quarter
         volumeData = managedObject.volumeData
     }
-    
+
     public func managedObject() -> QuaterlyDataObject {
         let quaterlyData = QuaterlyDataObject()
         quaterlyData.id = id
@@ -51,5 +52,5 @@ extension MobileData: Persistable {
         quaterlyData.volumeData = volumeData
         return quaterlyData
     }
-    
+
 }
