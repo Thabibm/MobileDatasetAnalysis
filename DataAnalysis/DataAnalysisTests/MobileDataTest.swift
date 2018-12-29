@@ -7,35 +7,7 @@
 //
 
 import UIKit
-
-struct MockResultList: Codable {
-    var resultList: MockDataset
-    
-    enum CodingKeys: String, CodingKey {
-        case resultList = "result"
-    }
-}
-
-struct MockDataset: Codable {
-    var mobileDataList: [MockMobileData]
-    
-    enum CodingKeys: String, CodingKey {
-        case mobileDataList = "records"
-    }
-}
-
-struct MockMobileData: Codable {
-    
-    var volumeData: String
-    var quarter: String
-    var id: Int8
-    
-    enum CodingKeys: String, CodingKey {
-        case volumeData = "volume_of_mobile_data", id = "_id", quarter = "quarter"
-    }
-    
-}
-
+@testable import DataAnalysis
 
 import XCTest
 
@@ -109,7 +81,7 @@ class MobileDataTest: XCTestCase {
 
     func testModelData() {
         let datasetJSONData = try! JSONSerialization.data(withJSONObject: dataset!, options: .prettyPrinted)
-        let datasetItems = try! JSONDecoder().decode(MockResultList.self, from: datasetJSONData)
+        let datasetItems = try! JSONDecoder().decode(ResultList.self, from: datasetJSONData)
         XCTAssertEqual(datasetItems.resultList.mobileDataList.count, 5)
         
         var i = 0

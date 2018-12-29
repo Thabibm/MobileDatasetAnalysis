@@ -28,17 +28,14 @@ class DataConsumptionService {
         let task = URLSession.shared.dataTask(with: request) { (data, response, error) -> Void in
             DispatchQueue.main.async(execute: {
                 if data == nil {
-//                    print("Communication error from GET \(url) :\n\(error?.localizedDescription ?? "No data received")")
                     complete(Result.failure("Communication error from GET \(url) :\n\(error?.localizedDescription ??  "No data received")"))
                     return
                 }
                                 
                 do {
                     let resultList = try JSONDecoder().decode(ResultList.self, from: data!)
-//                    print("Results from GET \(url) :\n\(resultList.resultList)")
                     complete(Result.success(resultList.resultList))
                 } catch {
-//                    print("Unable to parse JSON response \(error)")
                     complete(Result.failure("Unable to parse JSON response \(error)"))
                 }
             })
