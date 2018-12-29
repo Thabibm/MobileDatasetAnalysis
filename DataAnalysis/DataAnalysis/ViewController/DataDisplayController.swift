@@ -35,6 +35,7 @@ class DataDisplayController: UIViewController {
 
     @IBOutlet weak var mobileDataTableView: UITableView!
     var mobileDataViewModel: MobileDataViewModel = MobileDataViewModel()
+    private let refreshControl = UIRefreshControl()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -43,16 +44,38 @@ class DataDisplayController: UIViewController {
         navigationController?.navigationBar.barTintColor = THEME_COLOR
         let textAttributes = [NSAttributedString.Key.foregroundColor:UIColor.white]
         navigationController?.navigationBar.titleTextAttributes = textAttributes
+        navigationController?.navigationBar.barTintColor = THEME_COLOR
+        
+        if #available(iOS 10.0, *) {
+            mobileDataTableView.refreshControl = refreshControl
+        } else {
+            mobileDataTableView.addSubview(refreshControl)
+        }
+        refreshControl.addTarget(self, action: #selector(refreshData(_:)), for: .valueChanged)
+        refreshControl.tintColor = THEME_COLOR
         
         mobileDataViewModel.loadMobileConsumptionData()
         mobileDataViewModel.updateHandler = { [unowned self] in
             self.mobileDataTableView.reloadData()
+            DispatchQueue.main.async {
+                self.refreshControl.endRefreshing()
+                self.mobileDataTableView.alpha = 0
+                self.mobileDataTableView.reloadData()
+                UIView.animate(withDuration: 1.0) {
+                    self.mobileDataTableView.alpha = 1
+                }
+            }
         }
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         self.title = "Data Analytics"
+    
+    @objc private func refreshData(_ sender: Any) {
+        mobileDataViewModel.fetchMobileDataConsumption()
+    }
+    
         
         self.navigationController?.navigationBar.alpha = 0
         UIView.animate(withDuration: 1.5) {
@@ -80,7 +103,7 @@ extension DataDisplayController : UITableViewDataSource {
         if indexPath.row == HEADER_ROW {
             dataCell = tableView.dequeueReusableCell(withIdentifier: "HeaderCell", for: indexPath) as? DataCell
             dataCell!.yearLabel.text = "YEAR"
-            dataCell!.volumeConsumptionLabel.text = "Total volume consumed in petabytes"
+            dataCell!.volumeConsumptionLabel.text = "Volume in petabytes"
             
             dataCell!.yearLabel.textColor = THEME_COLOR
             dataCell?.volumeConsumptionLabel.textColor = THEME_COLOR
