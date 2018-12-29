@@ -34,6 +34,7 @@ class DataCell: UITableViewCell {
 class DataDisplayController: UIViewController {
 
     @IBOutlet weak var mobileDataTableView: UITableView!
+    @IBOutlet weak var launchLogoImageView: UIImageView!
     private var mobileDataViewModel: MobileDataViewModel = MobileDataViewModel()
     private let refreshControl = UIRefreshControl()
     
@@ -52,6 +53,7 @@ class DataDisplayController: UIViewController {
         let textAttributes = [NSAttributedString.Key.foregroundColor:UIColor.white]
         navigationController?.navigationBar.titleTextAttributes = textAttributes
         navigationController?.navigationBar.barTintColor = THEME_COLOR
+        navigationController?.setNavigationBarHidden(true, animated: false)
         
         if #available(iOS 10.0, *) {
             mobileDataTableView.refreshControl = refreshControl
@@ -64,7 +66,6 @@ class DataDisplayController: UIViewController {
         let tap = UITapGestureRecognizer(target: self, action:  #selector(self.handleTap(_:)))
         detailBgView.addGestureRecognizer(tap)
         
-        mobileDataViewModel.loadMobileConsumptionData()
         mobileDataViewModel.updateHandler = { [unowned self] in
             DispatchQueue.main.async {
                 self.refreshControl.endRefreshing()
@@ -77,11 +78,20 @@ class DataDisplayController: UIViewController {
         }
         
         detailBgView.isHidden = true
+        mobileDataTableView.isHidden = true
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        view.layoutIfNeeded()
+        UIView.animate(withDuration: 0.5, animations: { [weak self] in
+            self?.launchLogoImageView.transform = CGAffineTransform(scaleX: 3, y: 3)
+            self?.launchLogoImageView.alpha = 0
+            self?.view.backgroundColor = UIColor.white
+        }) { [weak self] (finished) in
+            self?.mobileDataTableView.isHidden = false
+            self?.navigationController?.setNavigationBarHidden(false, animated: true)
+            self?.mobileDataViewModel.loadMobileConsumptionData()
+        }
     }
     
     @objc private func refreshData(_ sender: Any) {

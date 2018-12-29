@@ -90,21 +90,21 @@ extension MobileDataViewModel {
     
     
     func fetchMobileDataConsumption() {
-        dataConsumptionService.getDataConsumptionList { (result) in
+        dataConsumptionService.getDataConsumptionList { [weak self] (result) in
             switch result {
             case .success(let resultItems):
-                self.clearCache()
-                let dataList = self.processResponseData(resultItems)
-                self.cacheMobileDataObjects(dataList)
-                self.dataset = self.getSavedMobileData()
+                self?.clearCache()
+                let dataList = self?.processResponseData(resultItems)
+                self?.cacheMobileDataObjects(dataList!)
+                self?.dataset = self?.getSavedMobileData()
                 break
                 
             case .failure(let message):
-                self.displayWarning(message: message)
+                self?.displayWarning(message: message)
                 break
             }
             
-            self.updateHandler()
+            self?.updateHandler()
         }
     }
     
