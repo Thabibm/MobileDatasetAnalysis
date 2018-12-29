@@ -47,6 +47,30 @@ extension MobileDataViewModel {
     func getVolumeDisplayString(_ totalVolume: Double) -> String {
         return String(format: "%.2f", totalVolume)
     }
+    
+    func getQuaterlyDisplayData(_ mobileData: MobileDataObject) -> [String] {
+        var displayData: [String] = [String]()
+        var quaterDecreaseString = ""
+        for index in 0...3 {
+            let quaterName = "Q" + "\(index + 1)"
+            let result = mobileData.quarterlyDataObjects.filter { $0.quarter.lowercased() == quaterName.lowercased() }
+            let quaterlyResult = result.first
+            var volumeDisplayString = "N/A"
+                
+            if quaterlyResult != nil {
+                volumeDisplayString = getVolumeDisplayString(Double(quaterlyResult!.volumeData) ?? 0)
+                
+                if quaterlyResult!.hasConsumptionDecreased {
+                    quaterDecreaseString = quaterlyResult!.quarter + " faced decrease in consumption!"
+                }
+            }
+            
+            displayData.append(quaterName + "\n\n" + volumeDisplayString)
+        }
+        
+        displayData.append(quaterDecreaseString)
+        return displayData
+    }
 }
 
 
