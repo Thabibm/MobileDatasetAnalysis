@@ -9,8 +9,8 @@
 import Foundation
 import RealmSwift
 
-private let YEAR_LOWER_LIMIT = 2008
-private let YEAR_UPPER_LIMIT = 2018
+public let YEAR_LOWER_LIMIT = 2008
+public let YEAR_UPPER_LIMIT = 2018
 
 class MobileDataViewModel {
     
@@ -94,7 +94,9 @@ extension MobileDataViewModel {
             switch result {
             case .success(let resultItems):
                 self.clearCache()
-                self.processResponseData(resultItems)
+                let dataList = self.processResponseData(resultItems)
+                self.cacheMobileDataObjects(dataList)
+                self.dataset = self.getSavedMobileData()
                 break
                 
             case .failure(let message):
@@ -107,7 +109,7 @@ extension MobileDataViewModel {
     }
     
     
-    func processResponseData(_ dataSet: Dataset) {
+    func processResponseData(_ dataSet: Dataset) -> [MobileDataObject] {
         
         var dataList: [MobileDataObject] = [MobileDataObject]()
         var lastYear = 0
@@ -130,7 +132,6 @@ extension MobileDataViewModel {
                 
                 if lastYear <= YEAR_UPPER_LIMIT && dataObject != nil {
                     dataList.append(dataObject!)
-                    cacheMobileDataObject(dataObject!)
                 }
                 
                 lastYear = year
@@ -155,16 +156,18 @@ extension MobileDataViewModel {
         
         if lastYear <= YEAR_UPPER_LIMIT && dataObject != nil {
             dataList.append(dataObject!)
-            cacheMobileDataObject(dataObject!)
         }
         
-        dataset = getSavedMobileData()
+        
+        return dataList
     }
     
     
-    func cacheMobileDataObject(_ data: MobileDataObject) {
-        try! realm.write {
-            realm.add(data)
+    func cacheMobileDataObjects(_ dataList: [MobileDataObject]) {
+        for data in dataList {
+            try! realm.write {
+                realm.add(data)
+            }
         }
     }
     
