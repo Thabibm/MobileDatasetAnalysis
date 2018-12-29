@@ -161,8 +161,9 @@ class MobileDataViewModelTest: XCTestCase {
         let quaterlyData = filteredDataSet!.first!.quarterlyDataObjects.first
         let volumeString = mobileDataViewModel.getVolumeDisplayString(Double(quaterlyData!.volumeData) ?? 0)
         if volumeString.contains(".") {
-            let decimalPrecission = volumeString.components(separatedBy: ".")
-            XCTAssertTrue(decimalPrecission.count == 2)
+            let stringArray = volumeString.components(separatedBy: ".")
+            let decimalPrecision = stringArray.last
+            XCTAssertTrue(decimalPrecision!.count == 2)
         }
     }
 
