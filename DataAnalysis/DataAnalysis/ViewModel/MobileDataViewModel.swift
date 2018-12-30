@@ -17,13 +17,14 @@ class MobileDataViewModel {
     let dataConsumptionService: DataConsumptionService!
     
     private var dataset: Results<MobileDataObject>?
-    private var realm = try! Realm()
+    private var realm: Realm!
     
     var updateHandler: () -> Void = {}
     
     
-    init(_ dataConsumptionService: DataConsumptionService = DataConsumptionService()) {
+    init(_ dataConsumptionService: DataConsumptionService = DataConsumptionService(), realm: Realm = try! Realm()) {
         self.dataConsumptionService = dataConsumptionService
+        self.realm = realm
     }
     
     
@@ -40,7 +41,7 @@ extension MobileDataViewModel {
         return dataset?.count ?? 0
     }
     
-    func dataAtIndexPath(_ indexPath: IndexPath) -> MobileDataObject {
+    @objc func dataAtIndexPath(_ indexPath: IndexPath) -> MobileDataObject {
         return dataset![indexPath.row]
     }
     
@@ -178,15 +179,8 @@ extension MobileDataViewModel {
     
     
     func clearCache() {
-        
-        if dataset == nil || dataset?.count == 0 {
-            return
-        }
-        
-        for data in dataset! {
-            try! realm.write {
-                realm.delete(data)
-            }
+        try! realm.write {
+            realm.deleteAll()
         }
     }
 }

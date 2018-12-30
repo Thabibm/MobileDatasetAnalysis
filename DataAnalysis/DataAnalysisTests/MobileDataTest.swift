@@ -75,8 +75,8 @@ class MobileDataTest: XCTestCase {
     }
 
     override func tearDown() {
-        super.tearDown()
         dataset = nil
+        super.tearDown()
     }
 
     func testModelData() {

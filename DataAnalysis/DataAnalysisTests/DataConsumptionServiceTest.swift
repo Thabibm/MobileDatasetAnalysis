@@ -19,8 +19,8 @@ class DataConsumptionServiceTest: XCTestCase {
     }
 
     override func tearDown() {
-        super.tearDown()
         dataConsumptionService = nil
+        super.tearDown()
     }
 
     func testDataConsumptionFetch() {
