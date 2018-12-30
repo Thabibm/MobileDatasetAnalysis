@@ -12,22 +12,32 @@ import RealmSwift
 public let YEAR_LOWER_LIMIT = 2008
 public let YEAR_UPPER_LIMIT = 2018
 
+/*
+ * MobileDataViewModel
+ */
+
 class MobileDataViewModel {
     
+    // Public vatiables
     let dataConsumptionService: DataConsumptionService!
+    var updateHandler: () -> Void = {} // Called when ever there is a change in view model
     
+    // private variables
     private var dataset: Results<MobileDataObject>?
     private var realm: Realm!
     
-    var updateHandler: () -> Void = {}
-    
-    
+    /*
+     * Gets service class instance and realm instace as parameters
+     * No arguments passed then default instance will be initialized
+     */
     init(_ dataConsumptionService: DataConsumptionService = DataConsumptionService(), realm: Realm = try! Realm()) {
         self.dataConsumptionService = dataConsumptionService
         self.realm = realm
     }
     
-    
+    /*
+     * Displays warning alert with message and cancel button title as OK
+     */
     func displayWarning(message: String) {
         WarningManager.createAndPushWarning(message: message, cancel: "OK")
     }
@@ -37,18 +47,33 @@ class MobileDataViewModel {
 
 extension MobileDataViewModel {
     
+    /*
+     * Returns the data count if no data available then default returns 0
+     */
     @objc func numberOfRowsToBeDisplayed() -> Int {
         return dataset?.count ?? 0
     }
     
+    /*
+     * Returns the mobile object model based on the given index
+     */
     @objc func dataAtIndexPath(_ indexPath: IndexPath) -> MobileDataObject {
         return dataset![indexPath.row]
     }
     
+    /*
+     * Returns the double data as string with 2 decimal precision
+     */
     func getVolumeDisplayString(_ totalVolume: Double) -> String {
         return String(format: "%.2f", totalVolume)
     }
     
+    /*
+     * Returns array of strings with 5 object count
+     * Array Structure
+     * [Q1 \n\n [data], Q2 \n\n [data], Q3 \n\n [data], Q4 \n\n [data], [Quater name] faced decrease in consumption!]
+     * if quaterly data not availabel then "N/A" will be appended
+     */
     func getQuaterlyDisplayData(_ mobileData: MobileDataObject) -> [String] {
         var displayData: [String] = [String]()
         var quaterDecreaseString = ""
@@ -79,6 +104,9 @@ extension MobileDataViewModel {
 
 extension MobileDataViewModel {
     
+    /*
+     * Loads data from realm if no data available then api request will be initiated
+     */
     func loadMobileConsumptionData() {
         dataset = getSavedMobileData()
         if dataset?.count == 0 {
@@ -89,7 +117,9 @@ extension MobileDataViewModel {
         updateHandler()
     }
     
-    
+    /*
+     * Api request
+     */
     @objc func fetchMobileDataConsumption() {
         dataConsumptionService.getDataConsumptionList { [weak self] (result) in
             switch result {
@@ -109,7 +139,11 @@ extension MobileDataViewModel {
         }
     }
     
-    
+    /*
+     * Process response struct and filter the data based on upper and lower Year limit
+     * Converts struct to realm model object
+     * Returns array of Realm model object
+     */
     func processResponseData(_ dataSet: Dataset) -> [MobileDataObject] {
         
         var dataList: [MobileDataObject] = [MobileDataObject]()
@@ -144,7 +178,7 @@ extension MobileDataViewModel {
             let quaterlyData = data.managedObject()
             quaterlyData.quarter = quaterName
             
-            if dataObject?.quarterlyDataObjects.count != 0 {
+            if dataObject!.quarterlyDataObjects.count != 0 {
                 let previousQuaterData = dataObject?.quarterlyDataObjects.last
                 if Double(previousQuaterData!.volumeData)! > Double(quaterlyData.volumeData)! {
                     dataObject!.isVolumeDecreasedYear = true
@@ -163,7 +197,9 @@ extension MobileDataViewModel {
         return dataList
     }
     
-    
+    /*
+     * Saves data in realm database
+     */
     func cacheMobileDataObjects(_ dataList: [MobileDataObject]) {
         for data in dataList {
             try! realm.write {
@@ -172,12 +208,16 @@ extension MobileDataViewModel {
         }
     }
     
-    
+    /*
+     * Retrive data from realm database
+     */
     func getSavedMobileData() -> Results<MobileDataObject> {
         return realm.objects(MobileDataObject.self)
     }
     
-    
+    /*
+     * Delete all the data from realm database
+     */
     func clearCache() {
         try! realm.write {
             realm.deleteAll()

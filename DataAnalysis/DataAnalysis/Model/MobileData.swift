@@ -9,6 +9,10 @@
 import Foundation
 import UIKit
 
+/*
+ * Response model structure
+ */
+
 public struct ResultList: Codable {
     var resultList: Dataset
     
@@ -36,6 +40,9 @@ struct MobileData: Codable {
     
 }
 
+/*
+ * Struct model to realm model conversion methods
+ */
 
 extension MobileData: Persistable {
 

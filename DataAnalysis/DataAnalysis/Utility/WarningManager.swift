@@ -10,12 +10,19 @@ import UIKit
 
 class WarningManager: NSObject {
     
+    /*
+     * Create and display alert with given message and cancel button title
+     */
     class func createAndPushWarning(message: String, cancel: String) {
         let alertControl = WarningManager.createAlertControl(message: message)
         alertControl.addAction(UIAlertAction(title: cancel, style: .default, handler: nil))
         self.displayAlertControl(alert: alertControl)
     }
     
+    /*
+     * Create and display alert with given message and multiple buttons.
+     * Button title and action are passed as tuples
+     */
     class func createAndPushWarning(message: String, buttons : [(title: String, callBack:(() -> Void)?)]?) {
         let alertControl = WarningManager.createAlertControl(message: message)
         if (buttons != nil) {
@@ -32,10 +39,16 @@ class WarningManager: NSObject {
     
     //Mark: Private Methods
     
+    /*
+     * Creates alert control with message
+     */
     private class func createAlertControl(message: String) -> UIAlertController {
         return UIAlertController.init(title: NSLocalizedString("DataAnalysis", comment: ""), message: message, preferredStyle: .alert)
     }
     
+    /*
+     * To display alert control and displays more than one alert on the window
+     */
     private class func displayAlertControl(alert: UIAlertController) {
         let alertWindow = UIWindow(frame: UIScreen.main.bounds)
         alertWindow.rootViewController = UIViewController()

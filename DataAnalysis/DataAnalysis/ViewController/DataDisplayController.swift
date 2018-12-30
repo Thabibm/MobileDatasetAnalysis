@@ -8,6 +8,7 @@
 
 import UIKit
 
+//MARK: Private Constants
 private let CELL_HEIGHT: CGFloat = 75
 private let HEADER_HEIGHT: CGFloat = 50
 private let HEADER_ROW = 0
@@ -17,6 +18,7 @@ private let BORDER_COLOR = UIColor.init(white: 223.0/255.0, alpha: 1.0)
 
 class DataCell: UITableViewCell {
   
+    //MARK: IBOutlets
     @IBOutlet var placeholderView: UIView?
     @IBOutlet weak var yearLabel: UILabel!
     @IBOutlet weak var volumeConsumptionLabel: UILabel!
@@ -32,11 +34,13 @@ class DataCell: UITableViewCell {
 
 
 class DataDisplayController: UIViewController {
-
-    @IBOutlet weak var mobileDataTableView: UITableView!
-    @IBOutlet weak var launchLogoImageView: UIImageView!
+    
+    //MARK: Private Properties
     private var mobileDataViewModel: MobileDataViewModel = MobileDataViewModel()
     private let refreshControl = UIRefreshControl()
+    
+    @IBOutlet weak var mobileDataTableView: UITableView!
+    @IBOutlet weak var launchLogoImageView: UIImageView!
     
     //MARK - Detail View Properties
     @IBOutlet weak var detailBgView: UIView!
@@ -144,7 +148,7 @@ extension DataDisplayController : UITableViewDataSource {
         var count = mobileDataViewModel.numberOfRowsToBeDisplayed()
         
         if count != 0 {
-            count = count + 1
+            count = count + 1 // To display header row with titles
         }
         return count
     }
@@ -166,7 +170,7 @@ extension DataDisplayController : UITableViewDataSource {
         
         dataCell = tableView.dequeueReusableCell(withIdentifier: "DataCell", for: indexPath) as? DataCell
         
-        let index = IndexPath.init(row: indexPath.row - 1, section: 0)
+        let index = IndexPath.init(row: indexPath.row - 1, section: 0) // To skip header row index
         let mobileData: MobileDataObject = mobileDataViewModel.dataAtIndexPath(index)
         dataCell!.yearLabel.text = mobileData.year
         dataCell!.volumeConsumptionLabel.text = mobileDataViewModel.getVolumeDisplayString(mobileData.totalVolumeConsumed)
@@ -207,7 +211,7 @@ extension DataDisplayController: UITableViewDelegate {
             return
         }
         
-        let index = IndexPath.init(row: indexPath.row - 1, section: 0)
+        let index = IndexPath.init(row: indexPath.row - 1, section: 0) // To discard header row index
         showDetailView(mobileDataViewModel.dataAtIndexPath(index))
     }
 }

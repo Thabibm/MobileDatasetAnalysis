@@ -8,12 +8,17 @@
 
 import Foundation
 
+/*
+ * Enum type to return success and failure of API response
+ */
 public enum Result {
     case success(Dataset)
     case failure(String)
 }
 
-
+/*
+ * API call on success convert the data in to struct model returns the result
+ */
 class DataConsumptionService {
     
     private var apiEndPoint = "https://data.gov.sg/api/action/datastore_search?resource_id=a807b7ab-6cad-4aa6-87d0-e283a7353a0f"
