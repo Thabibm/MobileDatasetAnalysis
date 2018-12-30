@@ -37,16 +37,19 @@ class MockDataConsumptionService: DataConsumptionService {
 class MockViewModel: MobileDataViewModel {
     
     var modelObjectList: [MobileDataObject]!
+    var failureMessage: String!
     
     override func fetchMobileDataConsumption() {
         dataConsumptionService.getDataConsumptionList { [weak self] (result) in
             switch result {
             case .success(let resultItems):
+                self?.failureMessage = ""
                 self?.modelObjectList = self?.processResponseData(resultItems)
                 break
                 
             case .failure(let message):
-                self?.displayWarning(message: message)
+                self?.failureMessage = message
+                self?.modelObjectList = nil
                 break
             }
             
@@ -56,6 +59,10 @@ class MockViewModel: MobileDataViewModel {
     
     override func numberOfRowsToBeDisplayed() -> Int {
         return modelObjectList?.count ?? 0
+    }
+    
+    override func dataAtIndexPath(_ indexPath: IndexPath) -> MobileDataObject {
+        return modelObjectList[indexPath.row]
     }
 }
 
@@ -67,7 +74,10 @@ class MobileDataViewModelTest: XCTestCase {
     var mockDataConsumptionService: MockDataConsumptionService!
     var mockMobileDataViewModel: MockViewModel!
     var isReloadCalled = false
+    var testRealm: Realm!
 
+    //MARK: Unit test configuration methods
+    
     override func setUp() {
         super.setUp()
         
@@ -174,8 +184,11 @@ class MobileDataViewModelTest: XCTestCase {
         let datasetJSONData = try! JSONSerialization.data(withJSONObject: dataset!, options: .prettyPrinted)
         resultList = try! JSONDecoder().decode(ResultList.self, from: datasetJSONData)
         
+        testRealm = try! Realm(
+            configuration: Realm.Configuration(inMemoryIdentifier: "Test_DB")
+        )
         mockDataConsumptionService = MockDataConsumptionService.init(resultList.resultList)
-        mockMobileDataViewModel = MockViewModel.init(mockDataConsumptionService)
+        mockMobileDataViewModel = MockViewModel.init(mockDataConsumptionService, realm: testRealm)
         
         mockMobileDataViewModel.updateHandler = {
             self.isReloadCalled = true
@@ -183,30 +196,78 @@ class MobileDataViewModelTest: XCTestCase {
     }
 
     override func tearDown() {
-        super.tearDown()
+        
+        mockMobileDataViewModel.clearCache()
+        
         isReloadCalled = false
         mockDataConsumptionService.isItemsFetchCalled = false
         mockDataConsumptionService = nil
         mockMobileDataViewModel = nil
+        dataset = nil
+        resultList = nil
+        
+        super.tearDown()
     }
+    
+    //MARK: Test cases
     
     func testInit() {
         XCTAssertEqual(mockMobileDataViewModel.numberOfRowsToBeDisplayed(), 0)
     }
     
-    func testDataFetchFromServer() {
-        mockMobileDataViewModel.fetchMobileDataConsumption()
-        mockDataConsumptionService.fetchSuccess()
-        
-        XCTAssertTrue(mockDataConsumptionService.isItemsFetchCalled)
-        XCTAssertTrue(isReloadCalled)
-    }
-    
-    func testDataProcessing() {
+    func testDataFetchSuccess() {
         mockMobileDataViewModel.fetchMobileDataConsumption()
         mockDataConsumptionService.fetchSuccess()
         
         filteredDataSet = mockMobileDataViewModel.processResponseData(resultList.resultList)
+        
+        XCTAssertTrue(mockDataConsumptionService.isItemsFetchCalled)
+        XCTAssertTrue(isReloadCalled)
+        
+        let mobileConsumptionData = mockMobileDataViewModel.dataAtIndexPath(IndexPath.init(row: 0, section: 0))
+        XCTAssertEqual( mobileConsumptionData.year, filteredDataSet[0].year)
+    }
+    
+    func testDataFetchFailure() {
+        mockMobileDataViewModel.fetchMobileDataConsumption()
+        mockDataConsumptionService.fetchFailure()
+        
+        XCTAssertGreaterThan(mockMobileDataViewModel.failureMessage.count, 0)
+        XCTAssertTrue(isReloadCalled)
+        XCTAssertEqual(mockMobileDataViewModel.numberOfRowsToBeDisplayed(), 0)
+        XCTAssertNil(mockMobileDataViewModel.modelObjectList)
+    }
+    
+    func testMobileConsumptionDataSource() {
+        testDataFetchSuccess()
+        
+        var index = 0
+        for consumptionData in filteredDataSet {
+            let consumptionDataDetails = mockMobileDataViewModel.dataAtIndexPath(IndexPath.init(row: index, section: 0))
+            XCTAssertEqual(consumptionData.year, consumptionDataDetails.year)
+            XCTAssertEqual(consumptionData.totalVolumeConsumed, consumptionDataDetails.totalVolumeConsumed)
+            XCTAssertEqual(consumptionData.isVolumeDecreasedYear, consumptionDataDetails.isVolumeDecreasedYear)
+            
+            XCTAssertGreaterThan(consumptionData.quarterlyDataObjects.count , 0)
+            XCTAssertGreaterThan(consumptionDataDetails.quarterlyDataObjects.count , 0)
+            
+            var subIndex = 0
+            for quaterlyData in consumptionData.quarterlyDataObjects {
+                let quaterlyDataDetails = consumptionDataDetails.quarterlyDataObjects[subIndex]
+                XCTAssertEqual(quaterlyData.quarter, quaterlyDataDetails.quarter)
+                XCTAssertEqual(quaterlyData.hasConsumptionDecreased, quaterlyDataDetails.hasConsumptionDecreased)
+                XCTAssertEqual(quaterlyData.id, quaterlyDataDetails.id)
+                XCTAssertEqual(quaterlyData.volumeData, quaterlyDataDetails.volumeData)
+                subIndex = subIndex + 1
+            }
+            
+            index = index + 1
+        }
+    }
+    
+    func testDataProcessing() {
+        testDataFetchSuccess()
+        
         for data in filteredDataSet {
             XCTAssertGreaterThanOrEqual(Int(data.year)!, YEAR_LOWER_LIMIT)
             XCTAssertLessThanOrEqual(Int(data.year)!, YEAR_UPPER_LIMIT)
@@ -221,5 +282,26 @@ class MobileDataViewModelTest: XCTestCase {
             let decimalPrecision = stringArray.last
             XCTAssertTrue(decimalPrecision!.count == 2)
         }
+        
+        XCTAssertEqual(mockMobileDataViewModel.getQuaterlyDisplayData(filteredDataSet[0]).count, 5)
+    }
+    
+    //MARK: Realm test cases
+    
+    func testRealmSaveAndFetch() {
+        testDataFetchSuccess()
+        
+        let existingCount = testRealm.objects(MobileDataObject.self).count
+        XCTAssertEqual(existingCount, 0)
+        
+        mockMobileDataViewModel.cacheMobileDataObjects(filteredDataSet)
+        XCTAssertEqual(testRealm.objects(MobileDataObject.self).count, 3)
+    }
+    
+    func testRealmClearCache() {
+        testRealmSaveAndFetch()
+        
+        mockMobileDataViewModel.clearCache()
+        XCTAssertEqual(testRealm.objects(MobileDataObject.self).count, 0)
     }
 }
