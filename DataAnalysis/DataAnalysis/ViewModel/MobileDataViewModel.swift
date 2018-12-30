@@ -36,7 +36,7 @@ class MobileDataViewModel {
 
 extension MobileDataViewModel {
     
-    func numberOfRowsToBeDisplayed() -> Int {
+    @objc func numberOfRowsToBeDisplayed() -> Int {
         return dataset?.count ?? 0
     }
     
@@ -89,7 +89,7 @@ extension MobileDataViewModel {
     }
     
     
-    func fetchMobileDataConsumption() {
+    @objc func fetchMobileDataConsumption() {
         dataConsumptionService.getDataConsumptionList { [weak self] (result) in
             switch result {
             case .success(let resultItems):

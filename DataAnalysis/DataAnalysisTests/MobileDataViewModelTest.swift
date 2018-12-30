@@ -10,13 +10,62 @@ import XCTest
 import RealmSwift
 @testable import DataAnalysis
 
+class MockDataConsumptionService: DataConsumptionService {
+    
+    var complete: ((Result) -> ())!
+    var dataItems: Dataset!
+    var isItemsFetchCalled: Bool = false
+    
+    init(_ dataItems: Dataset) {
+        self.dataItems = dataItems
+    }
+    
+    override func getDataConsumptionList(complete: @escaping (Result) -> ()) {
+        isItemsFetchCalled = true
+        self.complete = complete
+    }
+    
+    func fetchSuccess() {
+        complete(Result.success(dataItems))
+    }
+    
+    func fetchFailure() {
+        complete(Result.failure("Invalid data"))
+    }
+}
+
+class MockViewModel: MobileDataViewModel {
+    
+    var modelObjectList: [MobileDataObject]!
+    
+    override func fetchMobileDataConsumption() {
+        dataConsumptionService.getDataConsumptionList { [weak self] (result) in
+            switch result {
+            case .success(let resultItems):
+                self?.modelObjectList = self?.processResponseData(resultItems)
+                break
+                
+            case .failure(let message):
+                self?.displayWarning(message: message)
+                break
+            }
+            
+            self?.updateHandler()
+        }
+    }
+    
+    override func numberOfRowsToBeDisplayed() -> Int {
+        return modelObjectList?.count ?? 0
+    }
+}
+
 class MobileDataViewModelTest: XCTestCase {
     
     var dataset: Dictionary<String, Any>?
     var resultList: ResultList!
     var filteredDataSet: [MobileDataObject]!
     var mockDataConsumptionService: MockDataConsumptionService!
-    var mobileDataViewModel: MobileDataViewModel!
+    var mockMobileDataViewModel: MockViewModel!
     var isReloadCalled = false
 
     override func setUp() {
@@ -126,9 +175,9 @@ class MobileDataViewModelTest: XCTestCase {
         resultList = try! JSONDecoder().decode(ResultList.self, from: datasetJSONData)
         
         mockDataConsumptionService = MockDataConsumptionService.init(resultList.resultList)
-        mobileDataViewModel = MobileDataViewModel.init(mockDataConsumptionService)
+        mockMobileDataViewModel = MockViewModel.init(mockDataConsumptionService)
         
-        mobileDataViewModel.updateHandler = {
+        mockMobileDataViewModel.updateHandler = {
             self.isReloadCalled = true
         }
     }
@@ -138,56 +187,39 @@ class MobileDataViewModelTest: XCTestCase {
         isReloadCalled = false
         mockDataConsumptionService.isItemsFetchCalled = false
         mockDataConsumptionService = nil
-        mobileDataViewModel = nil
+        mockMobileDataViewModel = nil
     }
     
     func testInit() {
-        XCTAssertEqual(mobileDataViewModel.numberOfRowsToBeDisplayed(), 0)
+        XCTAssertEqual(mockMobileDataViewModel.numberOfRowsToBeDisplayed(), 0)
     }
     
     func testDataFetchFromServer() {
-        mobileDataViewModel.fetchMobileDataConsumption()
+        mockMobileDataViewModel.fetchMobileDataConsumption()
         mockDataConsumptionService.fetchSuccess()
         
-        filteredDataSet = mobileDataViewModel.processResponseData(resultList.resultList)
+        XCTAssertTrue(mockDataConsumptionService.isItemsFetchCalled)
+        XCTAssertTrue(isReloadCalled)
+    }
+    
+    func testDataProcessing() {
+        mockMobileDataViewModel.fetchMobileDataConsumption()
+        mockDataConsumptionService.fetchSuccess()
+        
+        filteredDataSet = mockMobileDataViewModel.processResponseData(resultList.resultList)
         for data in filteredDataSet {
             XCTAssertGreaterThanOrEqual(Int(data.year)!, YEAR_LOWER_LIMIT)
             XCTAssertLessThanOrEqual(Int(data.year)!, YEAR_UPPER_LIMIT)
         }
         
-        XCTAssertTrue(mockDataConsumptionService.isItemsFetchCalled)
-        XCTAssertTrue(isReloadCalled)
+        XCTAssertEqual(mockMobileDataViewModel.numberOfRowsToBeDisplayed(), 3)
         
         let quaterlyData = filteredDataSet!.first!.quarterlyDataObjects.first
-        let volumeString = mobileDataViewModel.getVolumeDisplayString(Double(quaterlyData!.volumeData) ?? 0)
+        let volumeString = mockMobileDataViewModel.getVolumeDisplayString(Double(quaterlyData!.volumeData) ?? 0)
         if volumeString.contains(".") {
             let stringArray = volumeString.components(separatedBy: ".")
             let decimalPrecision = stringArray.last
             XCTAssertTrue(decimalPrecision!.count == 2)
-        }
-    }
-
-    class MockDataConsumptionService: DataConsumptionService {
-        
-        var complete: ((Result) -> ())!
-        var dataItems: Dataset!
-        var isItemsFetchCalled: Bool = false
-        
-        init(_ dataItems: Dataset) {
-            self.dataItems = dataItems
-        }
-        
-        override func getDataConsumptionList(complete: @escaping (Result) -> ()) {
-            isItemsFetchCalled = true
-            self.complete = complete
-        }
-        
-        func fetchSuccess() {
-            complete(Result.success(dataItems))
-        }
-        
-        func fetchFailure() {
-            complete(Result.failure("Invalid data"))
         }
     }
 }
