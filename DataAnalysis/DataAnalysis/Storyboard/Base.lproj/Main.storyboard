@@ -153,6 +153,13 @@
                                     <outlet property="delegate" destination="BYZ-38-t0r" id="mBS-hq-RBb"/>
                                 </connections>
                             </tableView>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="LaunchLogo" translatesAutoresizingMaskIntoConstraints="NO" id="5Up-6v-5Fp">
+                                <rect key="frame" x="87.5" y="233.5" width="200" height="200"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="200" id="1gA-wc-iv2"/>
+                                    <constraint firstAttribute="height" constant="200" id="eDA-9R-j1q"/>
+                                </constraints>
+                            </imageView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="mE1-Lj-qwR">
                                 <rect key="frame" x="0.0" y="64" width="375" height="603"/>
                                 <subviews>
@@ -256,7 +263,9 @@
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="v90-9X-fIh" firstAttribute="top" secondItem="94D-a7-pD4" secondAttribute="bottom" id="3uN-LV-Wqe"/>
+                            <constraint firstItem="5Up-6v-5Fp" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="4bf-IG-d1o"/>
                             <constraint firstItem="94D-a7-pD4" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="7GZ-RV-2de"/>
+                            <constraint firstItem="5Up-6v-5Fp" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="9vj-Lr-14J"/>
                             <constraint firstAttribute="trailing" secondItem="mE1-Lj-qwR" secondAttribute="trailing" id="Eam-j1-kn4"/>
                             <constraint firstItem="mE1-Lj-qwR" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="LaY-eq-8m5"/>
                             <constraint firstItem="mE1-Lj-qwR" firstAttribute="top" secondItem="iyZ-xG-f9z" secondAttribute="bottom" id="Nme-vm-Aiy"/>
@@ -269,6 +278,7 @@
                     <connections>
                         <outlet property="detailBgView" destination="mE1-Lj-qwR" id="vA0-Cm-qTQ"/>
                         <outlet property="detailView" destination="ZlX-uy-pT1" id="oJA-gJ-TiF"/>
+                        <outlet property="launchLogoImageView" destination="5Up-6v-5Fp" id="eUP-Pf-lcn"/>
                         <outlet property="mobileDataTableView" destination="94D-a7-pD4" id="SkS-up-RdN"/>
                         <outlet property="yearLabel" destination="J8o-AO-MpJ" id="ubI-qb-3c5"/>
                     </connections>
@@ -296,4 +306,7 @@
             <point key="canvasLocation" x="64.799999999999997" y="-596.85157421289364"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="LaunchLogo" width="157.37704467773438" height="157.37704467773438"/>
+    </resources>
 </document>
